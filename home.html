@@ -127,41 +127,41 @@
       });
 
       sendBtn.addEventListener("click", async () => {
-        const message = messageInput.value.trim();
-        if (!message) return;
+  const message = messageInput.value.trim();
+  if (!message) return;
 
-        const userMessage = document.createElement("div");
-        userMessage.className = "chat-message chat-user";
-        userMessage.textContent = message;
-        chatHistory.appendChild(userMessage);
+  const userMessage = document.createElement("div");
+  userMessage.className = "chat-message chat-user";
+  userMessage.textContent = message;
+  chatHistory.appendChild(userMessage);
 
-        messageInput.value = "";
+  messageInput.value = "";
 
-        try {
-          const res = await fetch("/chat", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ message })
-          });
+  try {
+    const res = await fetch("https://testingthepwa-production.up.railway.app/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ message })
+    });
 
-          const data = await res.json();
+    const data = await res.json();
 
-          const aiMessage = document.createElement("div");
-          aiMessage.className = "chat-message chat-ai";
-          aiMessage.textContent = data.reply || "No response.";
-          chatHistory.appendChild(aiMessage);
+    const aiMessage = document.createElement("div");
+    aiMessage.className = "chat-message chat-ai";
+    aiMessage.textContent = data.reply || "No response.";
+    chatHistory.appendChild(aiMessage);
 
-        } catch (err) {
-          const errorMessage = document.createElement("div");
-          errorMessage.className = "chat-message chat-ai";
-          errorMessage.textContent = "❌ Failed to get response.";
-          chatHistory.appendChild(errorMessage);
-        }
+  } catch (err) {
+    const errorMessage = document.createElement("div");
+    errorMessage.className = "chat-message chat-ai";
+    errorMessage.textContent = "❌ Failed to get response.";
+    chatHistory.appendChild(errorMessage);
+  }
 
-        chatHistory.scrollTop = chatHistory.scrollHeight;
-      });
+  chatHistory.scrollTop = chatHistory.scrollHeight;
+});
     });
   </script>
 
